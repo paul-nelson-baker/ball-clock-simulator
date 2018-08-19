@@ -7,7 +7,5 @@ import (
 
 func main() {
 	ballClock := structure.NewBallClock(30)
-	fmt.Println(ballClock.String())
-	calculation := ballClock.CalculateDaysUntilReset()
-	fmt.Println(calculation)
+	fmt.Print(ballClock.CalculateDaysUntilResetString())
 }

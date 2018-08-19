@@ -33,7 +33,16 @@ func (clock *BallClock) Reset() {
 	}
 }
 
-func (clock *BallClock) CalculateDaysUntilReset() (string) {
+func (clock *BallClock) CalculateDaysUntilResetString() string {
+	ballCount, days, seconds := clock.CalculateDaysUntilReset()
+	// We have to calculate millis ourselves https://github.com/golang/go/issues/5491
+	millis := int(seconds * 1e3)
+	// https://golang.org/pkg/fmt/
+	resultString := fmt.Sprintf("%d balls cycle after %d days.\nCompleted in %d milliseconds (%.3f seconds)\n", ballCount, days, millis, seconds)
+	return resultString
+}
+
+func (clock *BallClock) CalculateDaysUntilReset() (int, int, float64) {
 	clock.Reset()
 	days := 0
 	start := time.Now()
@@ -45,11 +54,7 @@ func (clock *BallClock) CalculateDaysUntilReset() (string) {
 		}
 	}
 	duration := time.Since(start)
-	// We have to calculate millis ourselves https://github.com/golang/go/issues/5491
-	millis := int(duration.Seconds() * 1e3)
-	// https://golang.org/pkg/fmt/
-	resultString := fmt.Sprintf("%d balls cycle after %d days.\nCompleted in %d milliseconds (%.3f seconds)\n", clock.count, days, millis, duration.Seconds())
-	return resultString
+	return clock.count, days, duration.Seconds()
 }
 
 func (clock *BallClock) String() string {
