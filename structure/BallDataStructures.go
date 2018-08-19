@@ -3,6 +3,8 @@ package structure
 import (
 	"encoding/json"
 	"sort"
+	"time"
+	"fmt"
 )
 
 type BallClock struct {
@@ -10,19 +12,42 @@ type BallClock struct {
 	FiveMin []int `json:"FiveMin"`
 	Hour    []int `json:"Hour"`
 	Main    []int `json:"Main"`
+	count   int
 }
 
 func NewBallClock(ballCount int) BallClock {
 	ballClock := BallClock{
-		Min:     []int{},
-		FiveMin: []int{},
-		Hour:    []int{},
-		Main:    []int{},
+		count: ballCount,
 	}
-	for i := 1; i <= ballCount; i++ {
-		ballClock.Main = append(ballClock.Main, i)
-	}
+	ballClock.Reset()
 	return ballClock
+}
+
+func (clock *BallClock) Reset() {
+	clock.Min = []int{}
+	clock.FiveMin = []int{}
+	clock.Hour = []int{}
+	clock.Main = []int{}
+	for i := 1; i <= clock.count; i++ {
+		clock.Main = append(clock.Main, i)
+	}
+}
+
+func (clock *BallClock) CalculateDaysUntilReset() (string) {
+	clock.Reset()
+	days := 0
+	start := time.Now()
+	for {
+		clock.TickDay()
+		days++
+		if clock.IsInitialOrdering() {
+			break
+		}
+	}
+	duration := time.Since(start)
+	millis := int(duration.Seconds() * 1e3)
+	resultString := fmt.Sprintf("%d balls cycle after %d days.\nCompleted in %d milliseconds (%.3f seconds)\n", clock.count, days, millis, duration.Seconds())
+	return resultString
 }
 
 func (clock *BallClock) String() string {
@@ -40,8 +65,18 @@ func (clock *BallClock) TickDay() {
 	}
 }
 
+func (clock *BallClock) TickHours(hours int) {
+	for i := 0; i < hours; i++ {
+		clock.TickHour()
+	}
+}
+
 func (clock *BallClock) TickHour() {
-	for i := 0; i < 60; i++ {
+	clock.TickMinutes(60)
+}
+
+func (clock *BallClock) TickMinutes(minutes int) {
+	for i := 0; i < minutes; i++ {
 		clock.TickMinute()
 	}
 }
