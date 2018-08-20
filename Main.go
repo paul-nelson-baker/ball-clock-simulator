@@ -20,7 +20,6 @@ func main() {
 		fmt.Print("Enter your input here: ")
 		userInputLine, _ := reader.ReadString('\n')
 		userInputItems := strings.Split(userInputLine, " ")
-		//fmt.Println(userInputItems)
 		if len(userInputItems) == 1 {
 			if ballCount, err := strconv.Atoi(strings.TrimSpace(userInputItems[0])); err == nil && ballCountIsValid(ballCount) {
 				fmt.Println("Working with ballcount: " + strconv.Itoa(ballCount))
