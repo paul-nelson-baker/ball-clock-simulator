@@ -1,4 +1,4 @@
-package main
+package structure
 
 import (
 	"testing"
@@ -10,6 +10,7 @@ func TestClockMatchesPDFIterations(t *testing.T) {
 	for i := 0; i < 325; i++ {
 		ballClock.TickMinute()
 	}
+	//fmt.Println(ballClock.String())
 	testSlicesEqual(t, ballClock.Min, []int{})
 	testSlicesEqual(t, ballClock.FiveMin, []int{22, 13, 25, 3, 7})
 	testSlicesEqual(t, ballClock.Hour, []int{6, 12, 17, 4, 15})
@@ -26,6 +27,7 @@ func TestClockCycleDaysOne(t *testing.T) {
 			break
 		}
 	}
+	//fmt.Println(ballClock.String())
 	if days != 15 {
 		t.FailNow()
 	}
@@ -41,6 +43,7 @@ func TestClockCycleDaysTwo(t *testing.T) {
 			break
 		}
 	}
+	//fmt.Println(ballClock.String())
 	if days != 378 {
 		t.FailNow()
 	}
