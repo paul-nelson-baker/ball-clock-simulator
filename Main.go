@@ -7,6 +7,13 @@ import (
 	"os"
 	"strings"
 	"strconv"
+	"errors"
+)
+
+var (
+	invalidInputString = errors.New("invalid input: input must be either one number, or a two numbers separated by a single space")
+	invalidInputCount  = errors.New("invalid number of inputs: cannot be less than one item or more than two")
+	invalidBallCount   = errors.New("invalid ball count: cannot be less than 27 or more than 127")
 )
 
 func main() {
@@ -15,36 +22,51 @@ func main() {
 	fmt.Println("Mode 1: Ball count only")
 	fmt.Println("Mode 2: Ball count and iteration count")
 	fmt.Println("Use CTRL+C to exit")
-	reader := bufio.NewReader(os.Stdin)
 	for {
 		fmt.Print("Enter your input here: ")
-		userInputLine, _ := reader.ReadString('\n')
-		userInputItems := strings.Split(userInputLine, " ")
-		if len(userInputItems) == 1 {
-			if ballCount, err := strconv.Atoi(strings.TrimSpace(userInputItems[0])); err == nil && ballCountIsValid(ballCount) {
+		if ints, e := getValidUserInput(); e != nil {
+			fmt.Println(e.Error())
+		} else {
+			switch len(ints) {
+			case 1:
+				ballCount := ints[0]
 				fmt.Println("Working with ballcount: " + strconv.Itoa(ballCount))
 				ballClock := structure.NewBallClock(ballCount)
 				fmt.Print(ballClock.CalculateDaysUntilResetString())
-			} else {
-				fmt.Println("Only numerical values between 27 and 127 are allowed")
-			}
-		} else if len(userInputItems) == 2 {
-			ballCount, ballCountParseErr := strconv.Atoi(strings.TrimSpace(userInputItems[0]))
-			iterations, iterationParseErr := strconv.Atoi(strings.TrimSpace(userInputItems[1]))
-			if ballCountParseErr == nil && iterationParseErr == nil && ballCountIsValid(ballCount) {
+			case 2:
+				ballCount := ints[0]
+				iterations := ints[1]
 				fmt.Println("Working with ballcount: " + strconv.Itoa(ballCount))
 				fmt.Println("Working with iterations: " + strconv.Itoa(iterations))
 				ballClock := structure.NewBallClock(ballCount)
 				ballClock.TickMinutes(iterations)
 				fmt.Println(ballClock.JsonString())
-			} else {
-				fmt.Println("Only numerical values between 27 and 127 are allowed")
 			}
-		} else {
-			fmt.Println("Wrong number of inputs, please try again.")
 		}
 		fmt.Println()
 	}
+}
+
+func getValidUserInput() ([]int, error) {
+	reader := bufio.NewReader(os.Stdin)
+	userInputLine, _ := reader.ReadString('\n')
+	userInputItems := strings.Split(userInputLine, " ")
+
+	var results []int
+	for _, value := range userInputItems {
+		if number, err := strconv.Atoi(strings.TrimSpace(value)); err != nil {
+			return []int{}, invalidInputString
+		} else {
+			results = append(results, number)
+		}
+	}
+	if len(results) < 1 && len(results) > 2 {
+		return []int{}, invalidInputCount
+	}
+	if results[0] < 27 || results[0] > 127 {
+		return []int{}, invalidBallCount
+	}
+	return results, nil
 }
 
 func ballCountIsValid(count int) bool {
