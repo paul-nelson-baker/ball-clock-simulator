@@ -73,7 +73,7 @@ func (clock *BallClock) CalculateDaysUntilReset() (int, int, float64) {
 	return clock.count, days, duration.Seconds()
 }
 
-func (clock *BallClock) String() string {
+func (clock *BallClock) JsonString() string {
 	bytes, _ := json.Marshal(clock)
 	return string(bytes)
 }
