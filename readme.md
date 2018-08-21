@@ -11,7 +11,7 @@ To do either of these things, respectfully, you can run the convenience scripts 
 - `run-cli-simulation.sh`
 
 ## Executing as an AWS Lambda
-Since IaaS and FaaS are relatively simple, and [Go Build supports build tags](https://dave.cheney.net/2013/10/12/how-to-use-conditional-compilation-with-the-go-build-tool) we can use the same codebase to run our CLI application as a REST endpoint. Compilation branching isn't usually advisable unless you're specifically doing it to support multiple platforms. In this case it's a simple way to include a secondary main method for AWS.
+Since IaaS and FaaS are relatively simple for small projects, and [Go Build supports build tags](https://dave.cheney.net/2013/10/12/how-to-use-conditional-compilation-with-the-go-build-tool) we can use the same codebase to run our CLI application as a REST endpoint. Compilation branching isn't usually advisable unless you're specifically doing it to support multiple platforms. In this case it's a simple way to include a secondary main method for AWS.
 
 This requires:
 - [aws-sam-cli](https://github.com/awslabs/aws-sam-cli) to be installed so we can run as an AWS Lambda
