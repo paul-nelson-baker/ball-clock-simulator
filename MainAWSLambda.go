@@ -39,9 +39,37 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			Body:            "Invalid request: `ball_count` can't be less than 27 or greater than 127",
 		}, InvalidBallCount
 	}
-	// Check to see if we're in mode-2
-	// Create the clock and simulate it for the appropriate iteration count
-	if iterationCount := ballSimulationRequest.IterationCount; iterationCount != nil {
+	// Check to see if we're in mode-1 or mode-2
+	if iterationCount := ballSimulationRequest.IterationCount; iterationCount == nil {
+		// We're in mode-1
+		// Create the clock and simulate how many days it takes to cycle the whole way through
+		clock, days, seconds := CalculateDaysUntilReset(ballCount)
+		response := BallClockSimulationResponse{
+			BallClock: *clock,
+			Days:      &days,
+			Seconds:   &seconds,
+		}
+		//
+		responseBytes, err := json.Marshal(response)
+		if err != nil {
+			return events.APIGatewayProxyResponse{
+				StatusCode:      500,
+				IsBase64Encoded: false,
+				Body:            err.Error(),
+			}, err
+		}
+
+		return events.APIGatewayProxyResponse{
+			StatusCode:      200,
+			IsBase64Encoded: false,
+			Body:            string(responseBytes),
+			Headers: map[string]string{
+				"Content-Type": "application/json",
+			},
+		}, nil
+	} else {
+		// We're in mode-2
+		// Create the clock and simulate it for the appropriate iteration count
 		ballClock := NewBallClock(ballCount)
 		ballClock.TickMinutes(*iterationCount)
 
@@ -67,33 +95,6 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			},
 		}, nil
 	}
-
-	// We're in mode-1
-	// Create the clock and simulate how many days it takes to cycle the whole way through
-	clock, days, seconds := CalculateDaysUntilReset(ballCount)
-	response := BallClockSimulationResponse{
-		BallClock: *clock,
-		Days:      &days,
-		Seconds:   &seconds,
-	}
-	//
-	responseBytes, err := json.Marshal(response)
-	if err != nil {
-		return events.APIGatewayProxyResponse{
-			StatusCode:      500,
-			IsBase64Encoded: false,
-			Body:            err.Error(),
-		}, err
-	}
-
-	return events.APIGatewayProxyResponse{
-		StatusCode:      200,
-		IsBase64Encoded: false,
-		Body:            string(responseBytes),
-		Headers: map[string]string{
-			"Content-Type": "application/json",
-		},
-	}, nil
 }
 
 func main() {
