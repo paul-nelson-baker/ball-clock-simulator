@@ -13,7 +13,7 @@ Resources:
       Runtime: go1.x
       Timeout: 30
       Events:
-        ModeOneApi:
+        BallClockApi:
           Type: Api
           Properties:
             Path: /
