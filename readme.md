@@ -42,4 +42,4 @@ Once you have all requirements met, open two separate terminals.
 ![alt Application running as Lambda](images/main-lambda.jpg)
 
 
-If you wish to deploy this to an AWS environment, you must include a `CodeUri` as part of the cloud-formation template. This must point to a valid artifact in S3.
+Note: If you wish to deploy this to an AWS environment, you must include a `CodeUri` as part of the cloud-formation template. This must point to a valid artifact in S3. This requires either manually uploading a file or creating a devops build/test/deploy pipeline, which is currently outside the scope of this project.
