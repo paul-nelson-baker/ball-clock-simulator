@@ -10,6 +10,8 @@ To do either of these things, respectfully, you can run the convenience scripts 
 - `test-tdd.sh`
 - `run-cli-simulation.sh`
 
+![alt Application running in terminal](./images/main-app.png)
+
 ## Executing as an AWS Lambda
 Since IaaS and FaaS are relatively simple for small projects, and [Go Build supports build tags](https://dave.cheney.net/2013/10/12/how-to-use-conditional-compilation-with-the-go-build-tool) we can use the same codebase to run our CLI application as a REST endpoint. Compilation branching isn't usually advisable unless you're specifically doing it to support multiple platforms. In this case it's a simple way to include a secondary main method for AWS.
 
@@ -27,5 +29,8 @@ Once you have all requirements met, open two separate terminals.
         - Mode 1 with 30 Balls
         - Mode 1 with 45 Balls
         - Mode 2 with 30 Balls and 325 iterations
+
+![alt Application running as Lambda](./images/main-lambda.png)
+
 
 If you wish to deploy this to an AWS environment, you must include a `CodeUri` as part of the cloud-formation template. This must point to a valid artifact in S3.
