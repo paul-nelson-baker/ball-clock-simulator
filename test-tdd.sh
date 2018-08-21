@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-go test ./support
+#go test -v ./...
+go test -v ./support
