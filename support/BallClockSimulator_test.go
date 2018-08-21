@@ -1,13 +1,12 @@
-package main
+package support
 
 import (
 	"testing"
-	"github.com/paul-nelson-baker/ball-clock-simulator/structure"
 	"fmt"
 )
 
 func TestClockMatchesPDFIterations(t *testing.T) {
-	ballClock := structure.NewBallClock(30)
+	ballClock := NewBallClock(30)
 	ballClock.TickMinutes(325)
 	fmt.Println(ballClock.JsonString())
 	testSlicesEqual(t, ballClock.Min, []int{})
@@ -17,29 +16,15 @@ func TestClockMatchesPDFIterations(t *testing.T) {
 }
 
 func TestClockCycleDaysOne(t *testing.T) {
-	_, daysUntilReset, _ := structure.CalculateDaysUntilReset(30)
+	_, daysUntilReset, _ := CalculateDaysUntilReset(30)
 	if daysUntilReset != 15 {
 		t.FailNow()
 	}
 }
 
 func TestClockCycleDaysTwo(t *testing.T) {
-	_, daysUntilReset, _ := structure.CalculateDaysUntilReset(45)
+	_, daysUntilReset, _ := CalculateDaysUntilReset(45)
 	if daysUntilReset != 378 {
 		t.FailNow()
-	}
-}
-
-func testSlicesEqual(t *testing.T, a, b []int) {
-	if (a == nil) != (b == nil) {
-		t.FailNow()
-	}
-	if len(a) != len(b) {
-		t.FailNow()
-	}
-	for i := range a {
-		if a[i] != b[i] {
-			t.FailNow()
-		}
 	}
 }
