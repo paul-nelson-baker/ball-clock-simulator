@@ -1,9 +1,9 @@
-## Ball Clock Simulator
+# Ball Clock Simulator
 For requirements refer to the [PDF](Rakuten-BallClockAssignment.pdf). I had never heard of
 a Ball Clock before this, I found [this video](https://youtu.be/F7K6GIBWPQw) helpful to
 understanding what a Ball Clock was and how it worked.
 
-### Executing the main application
+## Executing the main application
 There are two things that can be done.
 - Unit Tests can be executed
 - The Console application can be run
@@ -12,7 +12,7 @@ To do either of these things, respectfully, you can run the convenience scripts 
 - `test-tdd.sh`
 - `run-cli-simulation.sh`
 
-### Executing as an AWS Lambda
+## Executing as an AWS Lambda
 Since IaaS and FaaS are relatively simple, and [GoLang supports build tags](https://dave.cheney.net/2013/10/12/how-to-use-conditional-compilation-with-the-go-build-tool)
 we can use the same codebase to run our CLI application as a REST endpoint.
 
