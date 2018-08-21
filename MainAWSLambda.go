@@ -15,9 +15,9 @@ type BallSimulationRequest struct {
 }
 
 type BallClockSimulationResponse struct {
-	Days      *int      `json:"DaysToRecycle,omitempty"`
-	Seconds   *float64  `json:"SecondsToCalculate,omitempty"`
-	BallClock BallClock `json:"ClockState"`
+	Days      *int       `json:"DaysToRecycle,omitempty"`
+	Seconds   *float64   `json:"SecondsToCalculate,omitempty"`
+	BallClock *BallClock `json:"ClockState,omitempty"`
 }
 
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -43,11 +43,10 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	if iterationCount := ballSimulationRequest.IterationCount; iterationCount == nil {
 		// We're in mode-1
 		// Create the clock and simulate how many days it takes to cycle the whole way through
-		clock, days, seconds := CalculateDaysUntilReset(ballCount)
+		_, days, seconds := CalculateDaysUntilReset(ballCount)
 		response := BallClockSimulationResponse{
-			BallClock: *clock,
-			Days:      &days,
-			Seconds:   &seconds,
+			Days:    &days,
+			Seconds: &seconds,
 		}
 		//
 		responseBytes, err := json.Marshal(response)
@@ -74,7 +73,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		ballClock.TickMinutes(*iterationCount)
 
 		response := BallClockSimulationResponse{
-			BallClock: ballClock,
+			BallClock: &ballClock,
 		}
 
 		responseBytes, err := json.Marshal(response)
