@@ -23,22 +23,6 @@ func NewBallClock(ballCount int) BallClock {
 	return ballClock
 }
 
-//func (clock *BallClock) Min() []int {
-//	return clock.min
-//}
-//
-//func (clock *BallClock) FiveMin() []int {
-//	return clock.fiveMin
-//}
-//
-//func (clock *BallClock) Hour() []int {
-//	return clock.hour
-//}
-//
-//func (clock *BallClock) Main() []int {
-//	return clock.main
-//}
-
 func (clock *BallClock) Reset() {
 	clock.Min = []int{}
 	clock.FiveMin = []int{}
