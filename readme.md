@@ -1,5 +1,7 @@
-## BallClockSimulator
-For requirements refer to the [PDF](Rakuten-BallClockAssignment.pdf)
+## Ball Clock Simulator
+For requirements refer to the [PDF](Rakuten-BallClockAssignment.pdf) I had never heard of
+a Ball Clock before this, I found [this video](https://youtu.be/F7K6GIBWPQw) helpful to
+understanding what a Ball Clock was and how it worked.
 
 ### Executing the main application
 There are two things that can be done.
