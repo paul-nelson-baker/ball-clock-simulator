@@ -2,6 +2,7 @@ package support
 
 import (
 	"testing"
+	"fmt"
 )
 
 func assertIntSlicesEqual(t *testing.T, actual, expected []int) {
@@ -20,5 +21,13 @@ func assertIntSlicesEqual(t *testing.T, actual, expected []int) {
 		if actual[i] != expected[i] {
 			t.FailNow()
 		}
+	}
+}
+
+func fmtPrintlnErr(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("Attempted to log error, but it was nil")
 	}
 }

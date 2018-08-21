@@ -5,7 +5,52 @@ import (
 	"strings"
 )
 
-func TestGetUserInput(t *testing.T) {
-	inputs, _ := GetValidUserInput(strings.NewReader("123 4"))
-	assertIntSlicesEqual(t, inputs, []int{123, 4})
+func TestGetOneUserInput(t *testing.T) {
+	inputs, _ := GetValidUserInput(strings.NewReader("123"))
+	assertIntSlicesEqual(t, inputs, []int{123})
+}
+
+func TestGetTwoUserInput(t *testing.T) {
+	inputs, _ := GetValidUserInput(strings.NewReader("123 456"))
+	assertIntSlicesEqual(t, inputs, []int{123, 456})
+}
+
+func TestGetInvalidEmptyInput(t *testing.T) {
+	_, err := GetValidUserInput(strings.NewReader(""))
+	// Go will split an empty string to a string slice of a single empty string.
+	// By definition this is bad input, as opposed to no elements.
+	if err != InvalidInputString {
+		t.FailNow()
+	}
+}
+
+func TestGetInvalidUserInput(t *testing.T) {
+	_, err := GetValidUserInput(strings.NewReader("BadInput"))
+	if err != InvalidInputString {
+		t.FailNow()
+	}
+}
+
+func TestGetThreeInvalidUserInput(t *testing.T) {
+	_, err := GetValidUserInput(strings.NewReader("123 456 7"))
+	if err != InvalidInputCount {
+		fmtPrintlnErr(err)
+		t.FailNow()
+	}
+}
+
+func TestGetBelowRangeInvalidUserInput(t *testing.T) {
+	_, err := GetValidUserInput(strings.NewReader("26"))
+	if err != InvalidBallCount {
+		fmtPrintlnErr(err)
+		t.FailNow()
+	}
+}
+
+func TestGetAboveRangeInvalidUserInput(t *testing.T) {
+	_, err := GetValidUserInput(strings.NewReader("128"))
+	if err != InvalidBallCount {
+		fmtPrintlnErr(err)
+		t.FailNow()
+	}
 }
