@@ -27,7 +27,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return events.APIGatewayProxyResponse{
 			StatusCode:      400,
 			IsBase64Encoded: false,
-			Body:            "Invalid request: JSON must have `ball_count` and optionally `iteration_count`.",
+			Body:            "Invalid request: JSON must have `BallCount` and optionally `IterationCount`.",
 		}, err
 	}
 	// Ensure the ballcount is in a valid range, otherwise return 400 status code to API Gateway
@@ -36,7 +36,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return events.APIGatewayProxyResponse{
 			StatusCode:      400,
 			IsBase64Encoded: false,
-			Body:            "Invalid request: `ball_count` can't be less than 27 or greater than 127",
+			Body:            "Invalid request: JSON `BallCount` can't be less than 27 or greater than 127",
 		}, InvalidBallCount
 	}
 	// Check to see if we're in mode-1 or mode-2
