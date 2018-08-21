@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+set -e
+./test-tdd.sh
+
 echo "Ball Clock Simulation - Mode 1: 30 Balls"
 curl -X POST \
   http://localhost:3000/ \
