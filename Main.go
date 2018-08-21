@@ -11,6 +11,7 @@ import (
 
 func main() {
 	fmt.Println("Instructions: Enter a single number for mode 1, or two numbers separated by a space for mode 2")
+	fmt.Println("              Ball count must be in the range [27, 127] inclusive.")
 	fmt.Println("Mode 1: Ball count only")
 	fmt.Println("Mode 2: Ball count and iteration count")
 	fmt.Println("Use CTRL+C to exit")
