@@ -8,15 +8,15 @@ import (
 )
 
 func CalculateDaysUntilResetString(ballCount int) string {
-	ballCount, days, seconds := CalculateDaysUntilReset(ballCount)
+	clock, days, seconds := CalculateDaysUntilReset(ballCount)
 	// We have to calculate millis ourselves https://github.com/golang/go/issues/5491
 	millis := int(seconds * 1e3)
 	// https://golang.org/pkg/fmt/
-	resultString := fmt.Sprintf("%d balls cycle after %d days.\nCompleted in %d milliseconds (%.3f seconds)\n", ballCount, days, millis, seconds)
+	resultString := fmt.Sprintf("%d balls cycle after %d days.\nCompleted in %d milliseconds (%.3f seconds)\n", clock.count, days, millis, seconds)
 	return resultString
 }
 
-func CalculateDaysUntilReset(ballCount int) (int, int, float64) {
+func CalculateDaysUntilReset(ballCount int) (*BallClock, int, float64) {
 	clock := NewBallClock(ballCount)
 	days := 0
 	start := time.Now()
@@ -28,7 +28,7 @@ func CalculateDaysUntilReset(ballCount int) (int, int, float64) {
 		}
 	}
 	duration := time.Since(start)
-	return clock.count, days, duration.Seconds()
+	return &clock, days, duration.Seconds()
 }
 
 type BallClock struct {
