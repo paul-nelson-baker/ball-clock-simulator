@@ -35,7 +35,7 @@ func GetValidUserInput(in io.Reader) ([]int, error) {
 	}
 	// Now we validate we have the correct number of items.
 	// We only have mode 1 and 2, so we enforce that via length
-	if len(results) < 1 && len(results) > 2 {
+	if len(results) < 1 || len(results) > 2 {
 		return []int{}, InvalidInputCount
 	}
 	// Now that we have validated the user-date is structurally
