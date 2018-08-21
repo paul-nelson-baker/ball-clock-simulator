@@ -3,10 +3,13 @@ For requirements refer to the [PDF](Rakuten-BallClockAssignment.pdf). I had neve
 
 ## Installation
 You have to have:
-- [Go installed to you machine](https://golang.org/dl/)
-- retrieve this codebase:
+- [Go](https://golang.org/dl/) installed to you machine
+- [Dep](https://github.com/golang/dep) installed
+- retrieve this and initialize the codebase:
     ```
     go get github.com/paul-nelson-baker/ball-clock-simulator
+    cd ~/go/src/github.com/paul-nelson-baker/ball-clock-simulator
+    dep ensure
     ```
 
 ## Executing the main application
