@@ -14,7 +14,6 @@ Resources:
       Timeout: 30
       Events:
         ModeOneApi:
-          #          Type: AWS::Serverless::Api
           Type: Api
           Properties:
             Path: /
