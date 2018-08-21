@@ -3,9 +3,33 @@ package structure
 import (
 	"encoding/json"
 	"sort"
-	"time"
 	"fmt"
+	"time"
 )
+
+func CalculateDaysUntilResetString(ballCount int) string {
+	ballCount, days, seconds := CalculateDaysUntilReset(ballCount)
+	// We have to calculate millis ourselves https://github.com/golang/go/issues/5491
+	millis := int(seconds * 1e3)
+	// https://golang.org/pkg/fmt/
+	resultString := fmt.Sprintf("%d balls cycle after %d days.\nCompleted in %d milliseconds (%.3f seconds)\n", ballCount, days, millis, seconds)
+	return resultString
+}
+
+func CalculateDaysUntilReset(ballCount int) (int, int, float64) {
+	clock := NewBallClock(ballCount)
+	days := 0
+	start := time.Now()
+	for {
+		clock.TickDay()
+		days++
+		if clock.IsInitialOrdering() {
+			break
+		}
+	}
+	duration := time.Since(start)
+	return clock.count, days, duration.Seconds()
+}
 
 type BallClock struct {
 	Min     []int `json:"Min"`
@@ -31,30 +55,6 @@ func (clock *BallClock) Reset() {
 	for i := 1; i <= clock.count; i++ {
 		clock.Main = append(clock.Main, i)
 	}
-}
-
-func (clock *BallClock) CalculateDaysUntilResetString() string {
-	ballCount, days, seconds := clock.CalculateDaysUntilReset()
-	// We have to calculate millis ourselves https://github.com/golang/go/issues/5491
-	millis := int(seconds * 1e3)
-	// https://golang.org/pkg/fmt/
-	resultString := fmt.Sprintf("%d balls cycle after %d days.\nCompleted in %d milliseconds (%.3f seconds)\n", ballCount, days, millis, seconds)
-	return resultString
-}
-
-func (clock *BallClock) CalculateDaysUntilReset() (int, int, float64) {
-	clock.Reset()
-	days := 0
-	start := time.Now()
-	for {
-		clock.TickDay()
-		days++
-		if clock.IsInitialOrdering() {
-			break
-		}
-	}
-	duration := time.Since(start)
-	return clock.count, days, duration.Seconds()
 }
 
 func (clock *BallClock) JsonString() string {

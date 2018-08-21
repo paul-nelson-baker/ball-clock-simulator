@@ -3,14 +3,13 @@ package main
 import (
 	"testing"
 	"github.com/paul-nelson-baker/ball-clock-simulator/structure"
+	"fmt"
 )
 
 func TestClockMatchesPDFIterations(t *testing.T) {
 	ballClock := structure.NewBallClock(30)
-	for i := 0; i < 325; i++ {
-		ballClock.TickMinute()
-	}
-	//fmt.Println(ballClock.JsonString())
+	ballClock.TickMinutes(325)
+	fmt.Println(ballClock.JsonString())
 	testSlicesEqual(t, ballClock.Min, []int{})
 	testSlicesEqual(t, ballClock.FiveMin, []int{22, 13, 25, 3, 7})
 	testSlicesEqual(t, ballClock.Hour, []int{6, 12, 17, 4, 15})
@@ -18,33 +17,15 @@ func TestClockMatchesPDFIterations(t *testing.T) {
 }
 
 func TestClockCycleDaysOne(t *testing.T) {
-	ballClock := structure.NewBallClock(30)
-	days := 0
-	for {
-		ballClock.TickDay()
-		days++
-		if ballClock.IsInitialOrdering() {
-			break
-		}
-	}
-	//fmt.Println(ballClock.JsonString())
-	if days != 15 {
+	_, daysUntilReset, _ := structure.CalculateDaysUntilReset(30)
+	if daysUntilReset != 15 {
 		t.FailNow()
 	}
 }
 
 func TestClockCycleDaysTwo(t *testing.T) {
-	ballClock := structure.NewBallClock(45)
-	days := 0
-	for {
-		ballClock.TickDay()
-		days++
-		if ballClock.IsInitialOrdering() {
-			break
-		}
-	}
-	//fmt.Println(ballClock.JsonString())
-	if days != 378 {
+	_, daysUntilReset, _ := structure.CalculateDaysUntilReset(45)
+	if daysUntilReset != 378 {
 		t.FailNow()
 	}
 }

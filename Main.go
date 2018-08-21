@@ -33,8 +33,7 @@ func main() {
 				//If mode 1, calculate how many days before we reset
 				ballCount := userInputValues[0]
 				fmt.Println("Mode 1::Working with ballcount: " + strconv.Itoa(ballCount))
-				ballClock := structure.NewBallClock(ballCount)
-				fmt.Print(ballClock.CalculateDaysUntilResetString())
+				fmt.Print(structure.CalculateDaysUntilResetString(ballCount))
 			case 2:
 				// if mode 2, perform the number of iterations necessary
 				// and then print out the state of the clock
