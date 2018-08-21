@@ -21,7 +21,7 @@ type BallClockSimulationResponse struct {
 }
 
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	// Get the request and validate it
+	// Get the request and validate it, otherwise return 400 status code to API Gateway
 	var ballSimulationRequest BallSimulationRequest
 	if err := json.Unmarshal([]byte(request.Body), &ballSimulationRequest); err != nil {
 		return events.APIGatewayProxyResponse{
@@ -30,7 +30,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			Body:            "Invalid request: JSON must have `ball_count` and optionally `iteration_count`.",
 		}, err
 	}
-	// Ensure the ballcount is in a valid range
+	// Ensure the ballcount is in a valid range, otherwise return 400 status code to API Gateway
 	ballCount := ballSimulationRequest.BallCount
 	if ballCount < 27 || ballCount > 127 {
 		return events.APIGatewayProxyResponse{
@@ -40,6 +40,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		}, InvalidBallCount
 	}
 	// Check to see if we're in mode-2
+	// Create the clock and simulate it for the appropriate iteration count
 	if iterationCount := ballSimulationRequest.IterationCount; iterationCount != nil {
 		ballClock := NewBallClock(ballCount)
 		ballClock.TickMinutes(*iterationCount)
@@ -68,6 +69,7 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	// We're in mode-1
+	// Create the clock and simulate how many days it takes to cycle the whole way through
 	clock, days, seconds := CalculateDaysUntilReset(ballCount)
 	response := BallClockSimulationResponse{
 		BallClock: *clock,
