@@ -20,8 +20,8 @@ This requires:
 
 Once these requirements are met on your local machine:
 In one terminal run `run-aws-simulation.sh` in start SAM and reserve the default port (3000). You can now
-open a new terminal (or move this job to the background with `CTRL+Z` and `bg`) and run the curls against
-the endpoint with `test-aws-curls.sh`.
+open a new terminal (or move this job to the background with `CTRL+Z` and `bg`, but the output gets hard to read)
+and run the curls against the endpoint with `test-aws-curls.sh`.
 
 If you wish to deploy this to an AWS environment, you must include a `CodeUri` as part of the cloud-formation template.
 This must point to a valid artifact in S3.
