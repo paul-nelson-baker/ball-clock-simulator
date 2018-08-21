@@ -1,13 +1,15 @@
 # Ball Clock Simulator
 For requirements refer to the [PDF](Rakuten-BallClockAssignment.pdf). I had never heard of a Ball Clock before this, I found [this video](https://youtu.be/F7K6GIBWPQw) helpful to understanding what a Ball Clock was and how it worked.
 
+## Installation
+You have to have
+- [Go installed to you machine](https://golang.org/dl/)
+- retrieve this codebase:
+    ```
+    go get github.com/paul-nelson-baker/ball-clock-simulator
+    ```
+
 ## Executing the main application
-You have to have [Go installed to you machine](https://golang.org/dl/), then retrieve the codebase
-
-```
-go get github.com/paul-nelson-baker/ball-clock-simulator
-```
-
 You can run the convenience scripts provided:
 - `test-tdd.sh`
     - This will run unit tests for the codebase
