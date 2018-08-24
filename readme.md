@@ -1,6 +1,12 @@
 # Ball Clock Simulator
 For requirements refer to the [PDF](Rakuten-BallClockAssignment.pdf). I had never heard of a Ball Clock before this, I found [this video](https://youtu.be/F7K6GIBWPQw) helpful to understanding what a Ball Clock was and how it worked.
 
+## Roadmap
+There is a lot that can be done to improve this. I didn't fully understand the assignment, nor did I have a good grasp on some of the Go interior workings. I've given myself the following homework:
+- [ ] Find a Go code profiler
+- [ ] Understand how Slices work (See Issue #1)
+- [ ] Reapproach my algorithms, potentially from the ground up, with the lessons learned to see if we can make all calls sub-second speed
+
 ## Installation
 You have to have:
 - [Go](https://golang.org/dl/) installed to you machine
