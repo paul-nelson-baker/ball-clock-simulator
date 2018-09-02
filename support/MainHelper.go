@@ -19,7 +19,7 @@ func GetValidUserInput(in io.Reader) ([]int, error) {
 	// Get a single line from the user and split them by space
 	reader := bufio.NewReader(in)
 	userInputLine, _ := reader.ReadString('\n')
-	userInputItems := strings.Split(userInputLine, " ")
+	userInputItems := strings.Fields(userInputLine)
 
 	// Iterate over the items returned from the user and turn
 	// them to integers (regardless of how many)
