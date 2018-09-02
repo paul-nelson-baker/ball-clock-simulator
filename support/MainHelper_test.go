@@ -17,9 +17,7 @@ func TestGetTwoUserInput(t *testing.T) {
 
 func TestGetInvalidEmptyInput(t *testing.T) {
 	_, err := GetValidUserInput(strings.NewReader(""))
-	// Go will split an empty string to a string slice of a single empty string.
-	// By definition this is bad input, as opposed to no elements.
-	if err != InvalidInputString {
+	if err != InvalidInputCount {
 		t.FailNow()
 	}
 }
